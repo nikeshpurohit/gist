@@ -1,0 +1,31 @@
+{% extends "gist/base.html" %}
+{% load static %}
+
+{% block title %}Gist | View your summary{% endblock %}
+
+{% block content_layout %}justify-content-md-center text-center{% endblock %}
+
+{% block content %}
+
+{% if request.session.source_format == "url" %}
+<h1>Enter or paste an article URL into the box below</h1>
+<form action="../summary/" method="get">
+  <input type="hidden" value="url" name="doc_type" />
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="https://www.example.com" aria-label="URL" aria-describedby="basic-addon2" height="100%">
+    <div class="input-group-append input-group-lg">
+      <button class="btn btn-outline-primary" type="submit">Next></button>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if request.session.source_format == "text" %}
+  <h1>Paste your source document into the field below</h1>
+  <form action="../summary/" method="get">
+    <input type="hidden" value="text" name="doc_type">
+    <textarea name="input-text" class="form-control w-100 h-100" rows="10" placeholder="Enter or paste your raw document text here"></textarea>
+    <button type="submit" class="btn btn-outline-primary btn-lg btn-block">submit</button>
+  </form>
+  {% endif %}
+
+  {% endblock %}

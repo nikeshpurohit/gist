@@ -1,0 +1,27 @@
+{% extends "gist/base.html" %}
+{% load static %}
+
+{% block title %}Gist | View your summary{% endblock %}
+
+{% block content_layout %}justify-content-md-center text-center{% endblock %}
+
+{% block content %}
+<div class="alert alert-info text-left alert-dismissible fade show" role="alert">
+  <b>Cleaned text:</b> {{ cleanText }}
+  <b>doc_type:</b> {{ doc_type }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<h1>Your Summary</h1>
+<div class="card text-left">
+  <div class="card-body">
+    <p class="card-text">{{ summary }}</p>
+  </div>
+  <div class="card-footer text-muted text-center">
+    <a href="#"> Summary not satisfactory? </a>
+  </div>
+</div>
+
+
+{% endblock %}
