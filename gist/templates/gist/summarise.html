@@ -9,10 +9,12 @@
 
 {% if request.session.source_format == "url" %}
 <h1>Enter or paste an article URL into the box below</h1>
-<form action="../summary/" method="get">
+<form action="../summary/" method="post">
+  {% csrf_token %}
   <input type="hidden" value="url" name="doc_type" />
+  <input type="hidden" value="abstractive" name="method" />
   <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="https://www.example.com" aria-label="URL" aria-describedby="basic-addon2" height="100%">
+    <input type="text" class="form-control" name="input-url" placeholder="https://www.example.com" aria-label="URL" aria-describedby="basic-addon2" height="100%">
     <div class="input-group-append input-group-lg">
       <button class="btn btn-outline-primary" type="submit">Next></button>
     </div>
@@ -21,8 +23,10 @@
 
   {% if request.session.source_format == "text" %}
   <h1>Paste your source document into the field below</h1>
-  <form action="../summary/" method="get">
+  <form action="../summary/" method="post">
+    {% csrf_token %}
     <input type="hidden" value="text" name="doc_type">
+    <input type="hidden" value="abstractive" name="method" />
     <textarea name="input-text" class="form-control w-100 h-100" rows="10" placeholder="Enter or paste your raw document text here"></textarea>
     <button type="submit" class="btn btn-outline-primary btn-lg btn-block">submit</button>
   </form>

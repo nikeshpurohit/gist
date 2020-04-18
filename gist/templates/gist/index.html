@@ -7,15 +7,19 @@
 
 {% block content %}
 {% if request.session.source_format == "local" %}
-<div class="alert alert-danger text-left" role="alert">
+<div class="alert alert-danger text-left alert-dismissible fade show" role="alert">
   <b>Error:</b> file upload is not available.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 {% endif %}
 <h1>Choose how to provide your source document</h1>
 
 <div class="row pb-5 pt-2">
   <div class="col-sm">
-    <form method="get" id="text-submit-form" name="text-submit-form" action="../summarise/">
+    <form method="post" id="text-submit-form" name="text-submit-form" action="../summarise/">
+      {% csrf_token %}
       <input type="hidden" name="doc_type" value="text" />
       <a class="format-card-link text-decoration-none text-reset" href="#" onclick="document.getElementById('text-submit-form').submit();">
         <div class="format-card">
@@ -33,7 +37,8 @@
 
 
   <div class="col-sm">
-    <form method="get" id="url-submit-form" name="url-submit-form" action="../summarise/">
+    <form method="post" id="url-submit-form" name="url-submit-form" action="../summarise/">
+      {% csrf_token %}
       <input type="hidden" name="doc_type" value="url" />
       <a class="format-card-link text-decoration-none text-reset" href="#" onclick="document.getElementById('url-submit-form').submit();">
         <div class="format-card">
@@ -50,7 +55,8 @@
   </div>
 
   <div class="col-sm">
-    <form method="get" id="local-submit-form" name="local-submit-form" action="../summarise/">
+    <form method="post" id="local-submit-form" name="local-submit-form" action="../summarise/">
+      {% csrf_token %}
       <input type="hidden" name="doc_type" value="local" />
       <a class="format-card-link text-decoration-none text-reset" href="#" onclick="document.getElementById('local-submit-form').submit();">
         <div class="format-card">

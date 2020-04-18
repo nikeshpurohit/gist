@@ -1,0 +1,12 @@
+bidirectional LSTM model trained with 100,000 rows
+review len = 50
+summary len = 20
+emedding_dim = 100
+
+this doubled the training time from the model
+
+works better, needs evaluation
+
+Review: ordered several bags level coffee received level big deal like level picture 
+Original summary: wrong in picture 
+Predicted summary:  not as advertised

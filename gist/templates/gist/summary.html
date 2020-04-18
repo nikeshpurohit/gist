@@ -6,22 +6,62 @@
 {% block content_layout %}justify-content-md-center text-center{% endblock %}
 
 {% block content %}
-<div class="alert alert-info text-left alert-dismissible fade show" role="alert">
-  <b>Cleaned text:</b> {{ cleanText }}
-  <b>doc_type:</b> {{ doc_type }}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-  <span aria-hidden="true">&times;</span>
-</button>
+{% if error == "not_en"%}
+<div class="alert alert-danger text-left" role="alert">
+  <h4 class="alert-heading">Error</h4>
+  <p>Only documents in the English language can be summarised. Please ensure your source document is in the correct language and <a href="../" class="alert-link">try again</a>.</p>
+  <hr>
+  <p class="mb-0">The detected lanage is: {{ detected_lang }}</p>
 </div>
-<h1>Your Summary</h1>
+{% endif %}
+
+
+{% if error == "none" %}
+<!-- <div class="alert alert-info text-left alert-dismissible fade show" role="alert">
+  <b>doc_type:</b> {{ doc_type }}
+  <b>detected_lang:</b> {{ detected_lang }}
+  <b>input_length:</b> {{ input_length }}
+  <b>summary_length:</b> {{ summary_length }}
+  <b>clean_length:</b> {{ clean_length }}
+  <b>sum_ratio:</b> {{ sum_ratio }}
+  <b>reduction_percent:</b> {{ reduction_percent }}
+  <b>input_cleanwords:</b> {{ input_cleanwords }}
+  <b>method:</b> {{ summary_method }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div> -->
+<h1>Have a look at your summary</h1>
 <div class="card text-left">
   <div class="card-body">
     <p class="card-text">{{ summary }}</p>
   </div>
+  <form method="post" action="../summary/" id="extractive-form">
+    {% csrf_token %}
   <div class="card-footer text-muted text-center">
-    <a href="#"> Summary not satisfactory? </a>
+    <input type="hidden" name="method" value="extractive">
+    <input type="hidden" name="input" value="{{ input }}">
+    <a href="#" onclick="document.getElementById('extractive-form').submit();"> Summary not satisfactory? </a>
+  </div>
+  </form>
+</div>
+
+<div class="card text-left mt-5">
+  <div class="card-body">
+    <h5 class="card-title">Here's a few interesting facts about your summary <span class="badge badge-pill badge-dark text-capitalize float-right">{{ summary_method }}</span></h5>
+    <p class="card-text">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">The source text has <span class="font-weight-bold">{{ input_length }} words.</span></li>
+        <li class="list-group-item">Your summary has <span class="font-weight-bold">{{ summary_length }} words.</span></li>
+        <li class="list-group-item">Your summary is <span class="font-weight-bold">{{ reduction_percent }}%</span> smaller than the source.</li>
+        <li class="list-group-item">Gist removed <span class="font-weight-bold">{{ input_cleanwords }} words</span> by cleaning the source.</li>
+        <li class="list-group-item">The compression ratio is <span class="font-weight-bold">{{ sum_ratio }}</span>.</li>
+      </ul>
+
+    </p>
   </div>
 </div>
+{% endif %}
 
 
 {% endblock %}
